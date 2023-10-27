@@ -21,6 +21,8 @@ using std::string;
 using std::getline;
 using std::ifstream;
 using std::ofstream;
+using std::cin;
+using std::cout;
 
 void Sorting::fileRead() //read file contents and store in a vector for use in the sorting algorithm
 {
@@ -46,13 +48,41 @@ void Sorting::vectorSort() {
 
 void Sorting::vectorAggregate() {
 
-	//std::sort(aggregatingVector.begin(), sortingVector.end()); // iterate through sorted vector
+	string currentWord = "";
+	string currentAggregate = "";
+	string newWord = "";
+	int iterator = 0;
+
+	for (string currentLine : sortingVector) // iterate through sorted vector to aggregate values into single strings to pass to the aggregatingVector
+	{
+		currentWord = ;
+
+		if (newWord == currentWord && newWord != "") {
+
+			currentAggregate = currentAggregate + ", 1";
+			
+		}
+		else if (newWord != currentWord) {
+			if () {
+
+			}
+			currentAggregate = currentAggregate + "])";
+			aggregatingVector.push_back(currentAggregate);
+			
+			currentAggregate = "(\"" + newWord + "\"," + "[1";
+
+		}
+		else {
+			cout << "ERROR: could not detect word" << "\n";
+		}
+		currentWord = newWord;
+	} 
 
 }
 
 void Sorting::exportToFile() //export the aggregated vector as a text file
 {
 
-	ofstream sortedVector("./sortingOutput.txt");
+	ofstream aggregatingVector("./sortingOutput.txt");
 
 }

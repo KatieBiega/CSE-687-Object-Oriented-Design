@@ -20,23 +20,58 @@ using std::ifstream;
 
 using std::vector;
 using std::string;
+using std::to_string;
 using std::getline;
 using std::ifstream;
 using std::ofstream;
 
 void Reduce::fileRead() // pulls text from file and stores each line as a string in a vector for use by reduce function
 {
+	ifstream file;
 
+	file.open("sortingOutput.txt");
+
+	string inputLine = ""; // intermediary placeholder between file line and vector 
+
+	while (getline(file, inputLine, '\n'))
+	{
+		initialVector.push_back(inputLine);
+	}
+
+	file.close();
 }
 
-void Reduce::reduce() //iterate through the vector, calculating how many items each key with the same name appears
+void Reduce::reduce() //iterate through the vector, getting the word and adding up each "1" that appears to find a total
 {
-	int maxIterator = 1;
 
-	string key = ""; // key (word); function determines how many times this appears
+	string currentKey = ""; // key (word); function determines how many times this appears
 
-	for (int i = 0; i < maxIterator; i++) 
+	for (string Line : initialVector)
 	{
+		string currentLine = Line;
+
+		int length = currentLine.length();
+		int total = 0;
+
+
+		for (int i = 0; i < length; i++) {
+
+			
+
+			if (currentLine[i] = 1) // add 1 to total if "1" is encountered when iterating through the string (this character should not appear otherwise)
+			{
+				total++;
+			}
+			else if () {
+
+			}
+			else {
+
+			}
+
+		}
+
+		reducedVector.push_back("(\"" + currentKey + "\"" + ", [" + to_string(total) + "]");
 
 	}
 
@@ -44,6 +79,6 @@ void Reduce::reduce() //iterate through the vector, calculating how many items e
 
 void Reduce::export() 
 {
-
+	ofstream reducedVector("./reduceOutput.txt");
 	
 }

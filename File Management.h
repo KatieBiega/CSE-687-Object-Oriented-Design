@@ -11,6 +11,9 @@ public:
     void WriteToTempFile(const std::string& fileName, const std::string& data);
     void MoveToOutput(const std::string& tempFileName, const std::string& outputFileName);
 
+    std::ifstream OpenFileForRead(const std::string& fileName);
+    std::ofstream OpenFileForWrite(const std::string& fileName);
+
 private:
     std::string inputDirectory;
     std::string outputDirectory;

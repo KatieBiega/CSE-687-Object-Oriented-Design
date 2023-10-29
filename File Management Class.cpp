@@ -39,3 +39,13 @@ void FileManagement::WriteToTempFile(const string& fileName, const string& data)
 void FileManagement::MoveToOutput(const string& tempFileName, const string& outputFileName) {
     // Implement file move operation (e.g., using std::filesystem)
 }
+
+std::ifstream FileManagement::OpenFileForRead(const std::string& fileName) {
+    std::ifstream file(inputDirectory + "/" + fileName);
+    return file;
+}
+
+std::ofstream FileManagement::OpenFileForWrite(const std::string& fileName) {
+    std::ofstream file(tempDirectory + "/" + fileName);
+    return file;
+}

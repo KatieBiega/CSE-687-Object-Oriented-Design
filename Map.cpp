@@ -53,7 +53,7 @@ void Map::map(string& line)
 
 }
 
-string Map::string_export()
+string Map::mapped_export()
 {
 	string content;
 

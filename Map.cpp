@@ -24,7 +24,6 @@ using namespace std;
 
 void Map::map(string& line)
 {
-
 	//Initializing temporary string for buffering words
 	string temp = "";
 	
@@ -50,7 +49,6 @@ void Map::map(string& line)
 		words.push_back(temp);
 		cout << "Pushing to temp string in map...\n";
 	}
-
 }
 
 string Map::mapped_export()

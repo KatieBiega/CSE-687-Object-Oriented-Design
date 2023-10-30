@@ -55,8 +55,6 @@ void Map::map(string& line)
 
 string Map::mapped_export()
 {
-	string content;
-
 	//All words stored in vector from input file are written into the intermediate file as (key, value) pair 
 	for (int i = 0; i < words.size(); i++)
 	{

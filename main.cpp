@@ -29,8 +29,15 @@ int main() {
 
 	Reduce Reduction;
 	Map Mapping;
+	string mapped_string;
+	string tempFilename = "TempFile.txt";
+	string tempFileContent;
+	string reduced_string;
+	string outputFilename = "Final_OutputFile.txt";
+	string successString = "";
+	string successFilename = "SUCCESS.txt";
 
-
+	//EXECUTIVE//
 	//Prompt for input
 	cout << "==== MAP & REDUCE ====\n\n";
 
@@ -41,10 +48,20 @@ int main() {
 	cout << "Enter the temp directory: "; // this should contain the temp files between map and reduce
 	cin >> tempDirectory;
 
-	//create file management class based on the user inputs
+	//WORKFLOW//
+	//Create file management class based on the user inputs
 	FileManagement FileManage(inputDirectory, outputDirectory, tempDirectory);
+	fileString = FileManage.ReadAllFiles(); 
 
-	fileString = FileManage.ReadFile(fileName); 
-	
+	Mapping.map(fileString);
+	mapped_string = Mapping.string_export();
+	FileManage.WriteToTempFile(tempFilename, mapped_string);
+	tempFileContent = FileManage.ReadFromTempFile(tempFilename);
+	Reduction.import(tempFileContent);
+	Reduction.sort();
+	Reduction.aggregate();
+	reduced_string = Reduction.reduce_export();
 
+	FileManage.WriteToOutputFile(outputFilename, reduced_string);
+	FileManage.WriteToOutputFile(successFilename, successString);
 }

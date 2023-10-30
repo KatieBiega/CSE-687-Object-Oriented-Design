@@ -119,7 +119,7 @@ void Reduce::reduce() //iterate through the vector, getting the word and adding 
 
 }
 
-string Reduce::export() {
+string Reduce::reduce_export() {
 	
 	string outputString;
 

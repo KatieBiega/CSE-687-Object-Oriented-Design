@@ -24,15 +24,15 @@ string FileManagement::ReadAllFiles() {
 
     for (auto& file : std::filesystem::directory_iterator(std::filesystem::current_path())){
 
-        stringstream sstream file.path();
-        fullContent = fullContent + content;
-
+        while (file >> content) {
+            fullContent = fullContent + content;
+        }
     }
-    return content;
+    return fullContent;
 }
 
-string FileManagement::ReadFile(const std::string& fileName) {
-    ifstream file(inputDirectory + "/" + fileName);
+string FileManagement::ReadFromTempFile(const std::string& fileName) {
+    ifstream file(tempDirectory + "/" + fileName);
     if (file.is_open()) {
         std::string content((istreambuf_iterator<char>(file)), (istreambuf_iterator<char>()));
         file.close();

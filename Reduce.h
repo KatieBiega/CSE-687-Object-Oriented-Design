@@ -24,7 +24,7 @@ public:
 	void sort(); // sort the strings into alphabeetical order (ignore this, unless std::map's automatic sorting is insufficient)
 	void aggregate(); // aggregate each key/value pair with the same key into single keys with many attached values
 	void reduce(); // reduce the aggregated values into a single total value for the associated key
-	string export(); // export the final educed vector as a single string
+	string reduce_export(); // export the final educed vector as a single string
 
 private:
 

@@ -55,13 +55,6 @@ void Map::map(string& line)
 
 string Map::string_export()
 {
-	//Creating intermediate file to store Mapped results
-	/*
-	ofstream tempfile;
-	string TempFilename = "Mapped_" + filename + ".txt";
-	tempfile.open(TempFilename);
-	*/
-
 	string content;
 
 	//All words stored in vector from input file are written into the intermediate file as (key, value) pair 
@@ -70,9 +63,6 @@ string Map::string_export()
 		content = content + "(" + "\"" + words[i] + "\"" + ", 1)\n";
 		cout << "Storing key-value pairs in string in map...\n";
 	}
-
-	//Closing intermediate file stream
-	//tempfile.close();
 
 	return content;
 }

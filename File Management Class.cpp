@@ -10,6 +10,7 @@ using std::cout;
 using std::cin;
 using std::endl;
 using std::string;
+using std::getline;
 using std::vector;
 using std::stringstream;
 
@@ -21,14 +22,25 @@ string FileManagement::ReadAllFiles() {
 
     string content;
     string fullContent;
+    string temp;
+    ifstream fileStream;
+    string inputLine;
+    
 
-    for (auto& file : std::filesystem::directory_iterator(std::filesystem::current_path())){
+    for (auto& file : std::filesystem::directory_iterator(inputDirectory)){
 
-        while (file >> content) {
-            fullContent = fullContent + content;
+        fileStream.open(file.path().string());
+
+        while (getline(fileStream, inputLine))
+        {
+            content = content + inputLine;
         }
+ 
+        fullContent = fullContent + content;
+    
     }
     return fullContent;
+    fileStream.close();
 }
 
 string FileManagement::ReadFromTempFile(const std::string& fileName) {

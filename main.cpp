@@ -51,17 +51,33 @@ int main() {
 	//WORKFLOW//
 	//Create file management class based on the user inputs
 	FileManagement FileManage(inputDirectory, outputDirectory, tempDirectory);
-	fileString = FileManage.ReadAllFiles(); 
 
+	cout << "FileManagement Class initialized.\n";
+
+	fileString = FileManage.ReadAllFiles(); 
+	cout << "All files read.\n";
 	Mapping.map(fileString);
+	cout << "String from files passed to map function.\n";
+
 	mapped_string = Mapping.string_export();
+	cout << "Mapping complete; exporting resulting string.\n";
 	FileManage.WriteToTempFile(tempFilename, mapped_string);
+	cout << "String from mapping written to temp file.\n";
 	tempFileContent = FileManage.ReadFromTempFile(tempFilename);
+	cout << "New string read from temp file.\n";
 	Reduction.import(tempFileContent);
+	cout << "String imported by reduce class function and placed in vector.\n";
 	Reduction.sort();
+	cout << "Vector sorted.\n";
 	Reduction.aggregate();
+	cout << "Vector aggregated.\n";
+	Reduction.reduce();
+	cout << "Vector reduced.\n";
 	reduced_string = Reduction.reduce_export();
+	cout << "Vector exported to string.\n";
 
 	FileManage.WriteToOutputFile(outputFilename, reduced_string);
+	cout << "string written to output file.\n";
 	FileManage.WriteToOutputFile(successFilename, successString);
+	cout << "Success.\n";
 }

@@ -32,7 +32,9 @@ void Map::map(string& line)
 	int index;
 	while ((index = line.find_first_of(".,-:!?\\;*+[]<>()'")) != string::npos)
 	{
+		
 		line.erase(index, 1);
+		cout << "Erase line in mapping.\n";
 	}
 
 	//Set all alphabetic characters in input line to lower case 
@@ -46,6 +48,7 @@ void Map::map(string& line)
 	while (ss >> temp)
 	{
 		words.push_back(temp);
+		cout << "Pushing to temp string in map...\n";
 	}
 
 }
@@ -64,7 +67,8 @@ string Map::string_export()
 	//All words stored in vector from input file are written into the intermediate file as (key, value) pair 
 	for (int i = 0; i < words.size(); i++)
 	{
-		content << "(" + words[i] + ", 1)\n";
+		content = content + "(" + "\"" + words[i] + "\"" + ", 1)\n";
+		cout << "Storing key-value pairs in string in map...\n";
 	}
 
 	//Closing intermediate file stream

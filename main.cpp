@@ -1,50 +1,56 @@
 #include <iostream>
-#include <sstream>
-#include <fstream>
-#include <cstdlib>
-#include <string>
+#include "FileManagement.h"   // Include the File Management Header
+#include "Map.h"      // Include the Map header
+#include "Sorting.h"  // Include the Sorting header
+#include "Reduce.h"   // Include the Reduce header
 #include <vector>
-#include <algorithm>
-#include "Reduce.h"
-#include "Map.h"
-#include "File Management.h"
 
-
-using std::stringstream;
-using std::vector;
 using std::string;
-using std::to_string;
-using std::getline;
 using std::cout;
-using std::cin;
+using std::cerr;
+using std::vector;
+using std::endl;
+using std::ostream;
 
+int main(int argc, char* argv[]) {
+    if (argc != 4) {
+        cerr << "Usage: " << argv[0] << " input_dir output_dir temp_dir" << endl;
+        return 1;  // Exit with an error code
+    }
 
+    const string inputDir = argv[1];
+    const string outputDir = argv[2];
+    const string tempDir = argv[3];
 
-int main() {
-	string fileName = "";
-	string fileString = "";
-	string inputDirectory = "";
-	string outputDirectory = "";
-	string tempDirectory = "";
+    // Use the classes: FileManagement, Map, Sorting, and Reduce to implement your program logic
+    FileManagement fileManager(inputDir, outputDir, tempDir);
+    Map mapper(fileManager);
+    Sorting sorter(fileManager);  // Use the Sorting class
+    Reduce reducer(fileManager);  // Use the Reduce class
 
-	Reduce Reduction;
-	Map Mapping;
+    // Define the folder name you want to process
+    string targetFolderName = "shakespeare";  // Modify this to the desired folder name
 
+    // List all files in the target folder
+    vector<string> filesInFolder = fileManager.ListFilesInFolder(targetFolderName);
 
-	//Prompt for input
-	cout << "==== MAP & REDUCE ====\n\n";
+    // Use cerr for error messages to differentiate from regular program output
+    if (filesInFolder.empty()) {
+        cerr << "No files found in folder: " << targetFolderName << endl;
+        return 1;  // Exit with an error code
+    }
 
-	cout << "Enter the input directory: "; // this should contain the files for raw data input
-	cin >> inputDirectory;
-	cout << "Enter the output directory: "; // this should contain the final reduced files
-	cin >> outputDirectory;
-	cout << "Enter the temp directory: "; // this should contain the temp files between map and reduce
-	cin >> tempDirectory;
+    // Iterate through all files in the folder and apply Map and Sorting phases
+    for (const string& fileName : filesInFolder) {
+        string filePath = targetFolderName + "/" + fileName;
+        // Apply the Map phase to each file
+        mapper.ProcessFile(filePath);
+    }
 
-	//create file management class based on the user inputs
-	FileManagement FileManage(inputDirectory, outputDirectory, tempDirectory);
+    // Perform the Sorting phase
+    sorter.SortIntermediateData(); // Implement the sorting logic
 
-	fileString = FileManage.ReadFile(fileName); 
-	
+    // Perform the Reduce phase
+    reducer.ProcessSortedData();  // Implement the reduced data processing
 
 }

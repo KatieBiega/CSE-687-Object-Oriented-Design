@@ -1,7 +1,7 @@
 ﻿/*
 * CSE687 Project 1
 * Map Class Header file 
-* Defines public methods map() and file_export()
+* Defines public methods map() and mapped_export()
 */
 
 #include <iostream>
@@ -15,8 +15,8 @@ using namespace std;
 class Map {
 public:
 
-	void map(string&); //Method takes in current handeling input file name and parsed file line, and then creates vertor of words. 
-	string string_export(); //Method takes in current handeling file name, and local vector of parsed words to write (key, value) pairs to file. 
+	void map(string&); //Method takes in string of all input files and creates vertor of words 
+	string mapped_export(); //Method uses locally defined vector of parsed words to create (key, value) pairs and store in mapped string 
 
 private: 
 

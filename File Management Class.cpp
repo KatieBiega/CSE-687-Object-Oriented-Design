@@ -16,6 +16,21 @@ using std::stringstream;
 FileManagement::FileManagement(const std::string& inputDir, const std::string& outputDir, const std::string& tempDir)
     : inputDirectory(inputDir), outputDirectory(outputDir), tempDirectory(tempDir) {}
 
+
+string FileManagement::ReadAllFiles() {
+
+    string content;
+    string fullContent;
+
+    for (auto& file : std::filesystem::directory_iterator(std::filesystem::current_path())){
+
+        stringstream sstream file.path();
+        fullContent = fullContent + content;
+
+    }
+    return content;
+}
+
 string FileManagement::ReadFile(const std::string& fileName) {
     ifstream file(inputDirectory + "/" + fileName);
     if (file.is_open()) {
@@ -25,26 +40,9 @@ string FileManagement::ReadFile(const std::string& fileName) {
     }
     else {
         // Handle file not found or other errors
-        cerr << "Error: Unable to read file " << fileName << endl;
+        cerr << "Error: Unable to read temp file " << fileName << endl;
         return "";
     }
-}
-
-string FileManagement::ReadAllFiles() {
-
-    string content;
-    string fullContent;
-    ifstream istream;
-    stringstream sstream;
-
-    for (auto& file : std::filesystem::directory_iterator(std::filesystem::current_path())){
-
-        file.open();
-        content((istreambuf_iterator<char>(file)), (istreambuf_iterator<char>()));
-        fullContent = fullContent + content;
-
-    }
-    return content;
 }
 
 void FileManagement::WriteToTempFile(const string& fileName, const string& data) {
@@ -59,16 +57,15 @@ void FileManagement::WriteToTempFile(const string& fileName, const string& data)
     }
 }
 
-void FileManagement::MoveToOutput(const string& tempFileName, const string& outputFileName) {
-    // Implement file move operation (e.g., using std::filesystem)
+void FileManagement::WriteToOutputFile(const string& fileName, const string& data) {
+    ofstream file(outputDirectory + "/" + fileName);
+    if (file.is_open()) {
+        file << data;
+        file.close();
+    }
+    else {
+
+        cerr << "Error: Unable to write to temporary file " << fileName << endl;
+    }
 }
 
-std::ifstream FileManagement::OpenFileForRead(const std::string& fileName) {
-    std::ifstream file(inputDirectory + "/" + fileName);
-    return file;
-}
-
-std::ofstream FileManagement::OpenFileForWrite(const std::string& fileName) {
-    std::ofstream file(tempDirectory + "/" + fileName);
-    return file;
-}

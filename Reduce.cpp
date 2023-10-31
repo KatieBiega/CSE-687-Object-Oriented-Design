@@ -74,7 +74,7 @@ void Reduce::aggregate() {
 
 		}
 		else {
-			cout << "ERROR: could not detect word" << "\n";
+			//cout << "ERROR: could not detect word" << "\n";
 		}
 		currentWord = newWord;
 	}

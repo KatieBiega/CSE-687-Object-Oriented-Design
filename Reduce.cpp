@@ -53,6 +53,7 @@ void Reduce::aggregate() {
 	string newWord = ""; // the word in the next key/value pair
 	int begin;
 	int end;
+	int sw = 0;
 	
 	for (string currentLine : initialVector) // iterate through sorted vector to aggregate values into single strings to pass to the aggregatedVector
 	{
@@ -77,16 +78,19 @@ void Reduce::aggregate() {
 				
 			}
 			else{
-				currentAggregate = currentAggregate + "])";
-				aggregatedVector.push_back(currentAggregate);
+
+				if (sw == 1) {
+					currentAggregate = currentAggregate + "])";
+					aggregatedVector.push_back(currentAggregate);
+				}
 				currentAggregate = "(\"" + newWord + "\"," + "[1";
+				sw = 1;
 			}
 			
 		}
 		else {
 			cout << "ERROR: could not detect word" << "\n";
 		}
-		currentWord = newWord;
 	}
 
 }

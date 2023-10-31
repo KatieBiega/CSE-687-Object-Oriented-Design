@@ -1,4 +1,4 @@
-/*
+﻿/*
 * CSE687 Project 1
 *
 * The map class will contain a public method map(), that accepts a key and value. 
@@ -22,17 +22,18 @@
 
 using namespace std;
 
-void Map::map(const string&, string& line)
+void Map::map(string& line)
 {
-
 	//Initializing temporary string for buffering words
 	string temp = "";
 	
 	//Remove all punctuation and special characters excpet spaces from input line
 	int index;
-	while ((index = line.find_first_of(".,-:!?\\;*+[]<>()'")) != string::npos)
+	while ((index = line.find_first_of(".,-:&!?\\;*+[]<>()'")) != string::npos)
 	{
+		
 		line.erase(index, 1);
+		//cout << "Erase line in mapping.\n";
 	}
 
 	//Set all alphabetic characters in input line to lower case 
@@ -46,23 +47,18 @@ void Map::map(const string&, string& line)
 	while (ss >> temp)
 	{
 		words.push_back(temp);
+		//cout << "Pushing to temp string in map...\n";
 	}
-
 }
 
-void Map::file_export(const string& filename)
+string Map::mapped_export()
 {
-	//Creating intermediate file to store Mapped results
-	ofstream tempfile;
-	string TempFilename = "Mapped_" + filename + ".txt";
-	tempfile.open(TempFilename);
-
 	//All words stored in vector from input file are written into the intermediate file as (key, value) pair 
 	for (int i = 0; i < words.size(); i++)
 	{
-		tempfile << "(" + words[i] + ", 1)\n";
+		content = content + "(" + "\"" + words[i] + "\"" + ", 1)\n";
+		//cout << "Storing key-value pairs in string in map...\n";
 	}
 
-	//Closing intermediate file stream
-	tempfile.close();
+	return content;
 }

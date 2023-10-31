@@ -33,14 +33,16 @@ void Reduce::import(string inputString) // breaks down text in string into multi
 
 	while (getline(stream, inputLine, '\n'))
 	{
+		//cout << "Adding importing strings to initial vector in Reduce class...\n";
 		initialVector.push_back(inputLine);
 	}
 
 }
 
 void Reduce::sort() {
-
+	//cout << "Beginning sort in Reduce class...\n";
 	std::sort(initialVector.begin(), initialVector.end()); // call sort function from standard C++ library to sort the strings in the vector alphabetically
+	//cout << "Sort completed in Reduce class...\n";
 
 }
 
@@ -49,12 +51,18 @@ void Reduce::aggregate() {
 	string currentWord = ""; // the word currently being aggregated
 	string currentAggregate = ""; // placeholder string; built before adding to new aggregatedVector
 	string newWord = ""; // the word in the next key/value pair
-
+	int begin;
+	int end;
+	int sw = 0;
+	
 	for (string currentLine : initialVector) // iterate through sorted vector to aggregate values into single strings to pass to the aggregatedVector
 	{
-		int begin = currentLine.find("\""); // find the first quote in the key/value pair
-		int end = currentLine.find_last_of("\""); // find the second quote in the key/value pair
-		newWord = currentLine.substr (begin, end-begin); // extract the string between these two delimiters
+		//cout << "Aggregating element" + currentLine + "\n";
+		begin = currentLine.find_first_of("\""); // find the first quote in the key/value pair
+		end = currentLine.find_last_of("\""); // find the second quote in the key/value pair
+		newWord = currentLine.substr(begin + 1, end - begin - 1); // extract the string between these two delimiters
+		//cout << "New word:" + newWord + "\n";
+
 
 		if (newWord == currentWord && newWord != "") {
 
@@ -62,21 +70,27 @@ void Reduce::aggregate() {
 
 		}
 		else if (newWord != currentWord) {
-			if (currentWord == "") // do nothing if the current word is blank (should only apply at the very beginning of the loop
-			{ 
 
+			currentWord = newWord;
+
+			if (currentWord == "") // do nothing if the current word is blank (should only apply at the very beginning of the loop)
+			{ 
+				
 			}
 			else{
-				currentAggregate = currentAggregate + "])";
-				aggregatedVector.push_back(currentAggregate);
-				currentAggregate = "(\"" + newWord + "\"," + "[1";
-			}
 
+				if (sw == 1) {
+					currentAggregate = currentAggregate + "])";
+					aggregatedVector.push_back(currentAggregate);
+				}
+				currentAggregate = "(\"" + newWord + "\"," + "[1";
+				sw = 1;
+			}
+			
 		}
 		else {
 			//cout << "ERROR: could not detect word" << "\n";
 		}
-		currentWord = newWord;
 	}
 
 }
@@ -84,18 +98,26 @@ void Reduce::aggregate() {
 void Reduce::reduce() //iterate through the vector, getting the word and adding up each "1" that appears to find a total
 {
 
+	int begin;
+	int end;
+
+	size_t length;
+
+	int total;
+
 	string currentWord = ""; // key (word); function determines how many times this appears
 
 	for (string Line : aggregatedVector)
 	{
+		//cout << "" + Line + "\n";
 		string currentLine = Line;
 
-		int length = currentLine.length();
-		int total = 0;
+		length = currentLine.length();
+		total = 0;
 
-		int begin = currentLine.find("\"");
-		int end = currentLine.find_last_of("\"");
-		string currentWord = currentLine.substr(begin, end - begin);
+		begin = currentLine.find_first_of("\"");
+		end = currentLine.find_last_of("\"");
+		string currentWord = currentLine.substr(begin + 1, end - begin - 1);
 
 
 		for (int i = 0; i < length; i++) {
@@ -112,20 +134,30 @@ void Reduce::reduce() //iterate through the vector, getting the word and adding 
 
 		}
 
+		//cout << "Reduced word:" + currentWord + ", " + to_string(total) + "\n";
 		reducedVector.push_back("(\"" + currentWord + "\"" + ", " + to_string(total) + ")"); // placed aggregated key/value combos into a new vector
 
 
 	}
-
+	//cout << "Vector reduction complete.\n";
 }
 
-string Reduce::export() {
+string Reduce::reduce_export() {
 	
 	string outputString;
+	int toggle = 0;
 
 	for (string currentElement : reducedVector) // iterate through sorted vector to aggregate values into single strings to pass to the aggregatingVector
 	{
-		outputString = outputString + "\n" + currentElement;
+		//cout << "Adding vector element to final Reduce output string..." + currentElement + "\n";
+
+		if (toggle == 1) {
+			outputString = outputString + "\n";
+		}
+		toggle = 1;
+		outputString = outputString + currentElement;
+
+		//cout << outputString + "\n";
 	}
 
 	return outputString;

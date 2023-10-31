@@ -57,35 +57,35 @@ int main() {
 	FileManagement FileManage(inputDirectory, outputDirectory, tempDirectory);
 
 	//Read all files into single string and pass to Map class
-	cout << "FileManagement Class initialized.\n";
+	//cout << "FileManagement Class initialized.\n";
 	fileString = FileManage.ReadAllFiles(); 
-	cout << "All files read.\n";
+	//cout << "All files read.\n";
 	Mapping.map(fileString);
-	cout << "String from files passed to map function.\n";
+	//cout << "String from files passed to map function.\n";
 
 	//Write mapped output string to intermediate file 
 	mapped_string = Mapping.mapped_export();
-	cout << "Mapping complete; exporting resulting string.\n";
+	//cout << "Mapping complete; exporting resulting string.\n";
 	FileManage.WriteToTempFile(tempFilename, mapped_string);
-	cout << "String from mapping written to temp file.\n";
+	//cout << "String from mapping written to temp file.\n";
 
 	//Read from intermediate file and pass data to Reduce class
 	tempFileContent = FileManage.ReadFromTempFile(tempFilename);
-	cout << "New string read from temp file.\n";
+	//cout << "New string read from temp file.\n";
 	Reduction.import(tempFileContent);
 	cout << "String imported by reduce class function and placed in vector.\n";
 	Reduction.sort();
-	cout << "Vector sorted.\n";
+	//cout << "Vector sorted.\n";
 	Reduction.aggregate();
-	cout << "Vector aggregated.\n";
+	//cout << "Vector aggregated.\n";
 	Reduction.reduce();
-	cout << "Vector reduced.\n";
+	//cout << "Vector reduced.\n";
 	reduced_string = Reduction.reduce_export();
-	cout << "Vector exported to string.\n";
+	//cout << "Vector exported to string.\n";
 
 	//Sorted, aggregated, and reduced output string is written into final output file
 	FileManage.WriteToOutputFile(outputFilename, reduced_string);
-	cout << "string written to output file.\n";
+	//cout << "string written to output file.\n";
 	FileManage.WriteToOutputFile(successFilename, successString);
 	cout << "Success.\n";
 }

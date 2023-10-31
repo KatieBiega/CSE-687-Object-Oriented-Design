@@ -29,7 +29,7 @@ void Map::map(string& line)
 	
 	//Remove all punctuation and special characters excpet spaces from input line
 	int index;
-	while ((index = line.find_first_of(".,-:!?\\;*+[]<>()'")) != string::npos)
+	while ((index = line.find_first_of(".,-:&!?\\;*+[]<>()'")) != string::npos)
 	{
 		
 		line.erase(index, 1);

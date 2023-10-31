@@ -33,7 +33,7 @@ void Map::map(string& line)
 	{
 		
 		line.erase(index, 1);
-		cout << "Erase line in mapping.\n";
+		//cout << "Erase line in mapping.\n";
 	}
 
 	//Set all alphabetic characters in input line to lower case 
@@ -47,7 +47,7 @@ void Map::map(string& line)
 	while (ss >> temp)
 	{
 		words.push_back(temp);
-		cout << "Pushing to temp string in map...\n";
+		//cout << "Pushing to temp string in map...\n";
 	}
 }
 
@@ -57,7 +57,7 @@ string Map::mapped_export()
 	for (int i = 0; i < words.size(); i++)
 	{
 		content = content + "(" + "\"" + words[i] + "\"" + ", 1)\n";
-		cout << "Storing key-value pairs in string in map...\n";
+		//cout << "Storing key-value pairs in string in map...\n";
 	}
 
 	return content;

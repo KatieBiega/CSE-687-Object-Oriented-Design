@@ -33,16 +33,16 @@ void Reduce::import(string inputString) // breaks down text in string into multi
 
 	while (getline(stream, inputLine, '\n'))
 	{
-		cout << "Adding importing strings to initial vector in Reduce class...\n";
+		//cout << "Adding importing strings to initial vector in Reduce class...\n";
 		initialVector.push_back(inputLine);
 	}
 
 }
 
 void Reduce::sort() {
-	cout << "Beginning sort in Reduce class...\n";
+	//cout << "Beginning sort in Reduce class...\n";
 	std::sort(initialVector.begin(), initialVector.end()); // call sort function from standard C++ library to sort the strings in the vector alphabetically
-	cout << "Sort completed in Reduce class...\n";
+	//cout << "Sort completed in Reduce class...\n";
 
 }
 
@@ -57,11 +57,11 @@ void Reduce::aggregate() {
 	
 	for (string currentLine : initialVector) // iterate through sorted vector to aggregate values into single strings to pass to the aggregatedVector
 	{
-		cout << "Aggregating element" + currentLine + "\n";
+		//cout << "Aggregating element" + currentLine + "\n";
 		begin = currentLine.find_first_of("\""); // find the first quote in the key/value pair
 		end = currentLine.find_last_of("\""); // find the second quote in the key/value pair
 		newWord = currentLine.substr(begin + 1, end - begin - 1); // extract the string between these two delimiters
-		cout << "New word:" + newWord + "\n";
+		//cout << "New word:" + newWord + "\n";
 
 
 		if (newWord == currentWord && newWord != "") {
@@ -109,7 +109,7 @@ void Reduce::reduce() //iterate through the vector, getting the word and adding 
 
 	for (string Line : aggregatedVector)
 	{
-		cout << "" + Line + "\n";
+		//cout << "" + Line + "\n";
 		string currentLine = Line;
 
 		length = currentLine.length();
@@ -134,25 +134,30 @@ void Reduce::reduce() //iterate through the vector, getting the word and adding 
 
 		}
 
-		cout << "Reduced word:" + currentWord + ", " + to_string(total) + "\n";
+		//cout << "Reduced word:" + currentWord + ", " + to_string(total) + "\n";
 		reducedVector.push_back("(\"" + currentWord + "\"" + ", " + to_string(total) + ")"); // placed aggregated key/value combos into a new vector
 
 
 	}
-	cout << "Vector reduction complete.\n";
+	//cout << "Vector reduction complete.\n";
 }
 
 string Reduce::reduce_export() {
 	
 	string outputString;
+	int toggle = 0;
 
 	for (string currentElement : reducedVector) // iterate through sorted vector to aggregate values into single strings to pass to the aggregatingVector
 	{
-		cout << "Adding vector element to final Reduce output string..." + currentElement + "\n";
-		
-		outputString = outputString + "\n" + currentElement;
+		//cout << "Adding vector element to final Reduce output string..." + currentElement + "\n";
 
-		cout << outputString + "\n";
+		if (toggle == 1) {
+			outputString = outputString + "\n";
+		}
+		toggle = 1;
+		outputString = outputString + currentElement;
+
+		//cout << outputString + "\n";
 	}
 
 	return outputString;
